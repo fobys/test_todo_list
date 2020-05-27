@@ -34,6 +34,8 @@ class TasksController extends Controller
     /**
      * PostTasks
      *
+     * @param PostTasksRequest $request Request
+     *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function postTasks(PostTasksRequest $request)
@@ -42,6 +44,27 @@ class TasksController extends Controller
         $task->name = $request->name;
         $task->user_id = Auth::user()->id;
         $task->save();
+        return redirect('/');
+    }
+
+    /**
+     * UPDATE TASKS
+     *
+     * @param integer          $taskId  任務序號
+     * @param PostTasksRequest $request Request
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function putTasks(int $taskId, PostTasksRequest $request)
+    {
+        $tasks = Tasks::findOrFail($taskId);
+
+        if ($tasks['user_id'] != Auth::user()->id) {
+            return redirect('/')->withErrors(collect(['錯誤的使用者，不可更新']));
+        }
+
+        $tasks->name = $request->name;
+        $tasks->save();
         return redirect('/');
     }
 

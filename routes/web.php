@@ -20,4 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/tasks', 'TasksController@getTasks')->name('tasks');
 Route::post('/tasks', 'TasksController@postTasks')->name('postTasks');
+Route::put('/tasks/{tasks_id}', 'TasksController@putTasks')->name('putTasks')->where('tasks_id', '[0-9]+');
 Route::delete('/tasks/{tasks_id}', 'TasksController@deleteTasks')->name('deleteTasks')->where('tasks_id', '[0-9]+');

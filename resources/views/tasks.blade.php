@@ -24,7 +24,7 @@
             <!-- Add Task Button -->
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit">
                         <i class="fa fa-plus"></i> Add Task
                     </button>
                 </div>
@@ -51,10 +51,19 @@
                     <tbody>
                         @foreach ($tasks as $task)
                             <tr>
-                                <!-- Task Name -->
-                                <td class="table-text">
-                                    <div>{{ $task->name }}</div>
+                                <td>
+                                    <form action="/tasks/{{ $task->tasks_id }}" method="POST">
+                                        <td>
+                                            <input type="text" name="name" value="{{ $task->name }}"/><br />
+                                        </td>
+                                        <td>
+                                            {{ csrf_field() }}
+                                            {{ method_field('PUT') }}
+                                            <input type="submit" value="更新" />
+                                        </td>
+                                    </form>
                                 </td>
+
                                 <!-- Delete Button -->
                                 <td>
                                     <form action="/tasks/{{ $task->tasks_id }}" method="POST">
